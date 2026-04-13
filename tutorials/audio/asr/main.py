@@ -13,42 +13,29 @@
 # limitations under the License.
 
 """
-Audio Tagging Pipeline for NeMo Curator.
+ASR Alignment Pipeline for NeMo Curator.
 
-Processes raw audio data through diarization, ASR alignment, text
-normalization, quality metrics, and segment preparation to produce
-labelled training manifests for TTS or ASR.
-
-The pipeline is YAML-driven via Hydra and supports both TTS and ASR
-modalities by switching the configuration file.
+Processes raw audio data through ASR alignment to produce a manifest with ASR hypotheses using VAD segments.
 
 Usage:
-    # TTS pipeline (from Curator repo root)
-    python tutorials/audio/tagging/main.py \\
+    # ASR alignment pipeline (from Curator repo root)
+    python tutorials/audio/asr/main.py \\
         --config-path . \\
-        --config-name tts_pipeline \\
+        --config-name asr_alignment_pipeline \\
         input_manifest=/data/input.jsonl \\
-        final_manifest=/data/tts_output.jsonl \\
-        hf_token=<your_hf_token>
-
-    # ASR pipeline
-    python tutorials/audio/tagging/main.py \\
-        --config-path . \\
-        --config-name asr_pipeline \\
-        input_manifest=/data/input.jsonl \\
-        final_manifest=/data/asr_output.jsonl \\
+        final_manifest=/data/asr_alignment_output.jsonl \\
         hf_token=<your_hf_token>
 
     # Override parameters
-    python tutorials/audio/tagging/main.py \\
+    python tutorials/audio/asr/main.py \\
         --config-path . \\
-        --config-name tts_pipeline \\
+        --config-name asr_alignment_pipeline \\
         input_manifest=/data/input.jsonl \\
-        final_manifest=/data/output.jsonl \\
+        final_manifest=/data/asr_alignment_output.jsonl \\
         hf_token=<your_hf_token> \\
         device=cpu \\
         max_segment_length=30 \\
-        stages.10.min_duration=3
+        stages.4.min_duration=3
 """
 
 import hydra
